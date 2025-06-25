@@ -1,0 +1,18 @@
+Assumption,Unit,FY2025,FY2026,FY2027,FY2028,FY2029,FY2030,FY2031,FY2032,FY2033,FY2034,FY2035,FY2036,FY2037,FY2038,FY2039,FY2040,Notes
+"New York (NY)",,,,,,,,,,,,,,,,,,,
+"Rate Base: Capex Additions ($m)",$m,1200,1250,1300,1350,1400,1450,1450,1450,1450,1450,1450,1450,1450,1450,1450,1450,"Original currency. Company plans."
+"Rate Base: Book Depn Rate (% Opening RB)",%,0.035,0.035,0.035,0.035,0.035,0.035,0.035,0.035,0.035,0.035,0.035,0.035,0.035,0.035,0.035,0.035,"Or $m. From PUC filings."
+"Revenue: Allowed ROE (%)",%,0.09,0.09,0.091,0.091,0.092,0.092,0.092,0.092,0.092,0.092,0.092,0.092,0.092,0.092,0.092,0.092,"From latest rate case."
+"Revenue: Equity Ratio in Cap Structure (%)",%,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,"For ratemaking purposes."
+"Revenue: Overall Growth Rate (%)",%,0.04,0.042,0.045,0.04,0.038,0.035,0.035,0.035,0.035,0.035,0.035,0.035,0.035,0.035,0.035,0.035,"Incl. rate changes & underlying growth. Applied to prior year USD revenue."
+"Opex: Growth (before US CPI inflation) (%)",%,0.01,0.01,0.008,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,"Underlying opex growth. US CPI applied separately."
+"Massachusetts (MA)",,,,,,,,,,,,,,,,,,,
+"Rate Base: Capex Additions ($m)",$m,900,950,1000,1050,1100,1150,1150,1150,1150,1150,1150,1150,1150,1150,1150,1150,"Original currency."
+"Rate Base: Book Depn Rate (% Opening RB)",%,0.033,0.033,0.033,0.033,0.033,0.033,0.033,0.033,0.033,0.033,0.033,0.033,0.033,0.033,0.033,0.033,""
+"Revenue: Allowed ROE (%)",%,0.092,0.092,0.093,0.093,0.094,0.094,0.094,0.094,0.094,0.094,0.094,0.094,0.094,0.094,0.094,0.094,""
+"Revenue: Equity Ratio in Cap Structure (%)",%,0.52,0.52,0.52,0.52,0.52,0.52,0.52,0.52,0.52,0.52,0.52,0.52,0.52,0.52,0.52,0.52,""
+"Revenue: Overall Growth Rate (%)",%,0.038,0.04,0.042,0.038,0.036,0.033,0.033,0.033,0.033,0.033,0.033,0.033,0.033,0.033,0.033,0.033,""
+"Opex: Growth (before US CPI inflation) (%)",%,0.008,0.008,0.006,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,""
+"US CPI Inflation Ref (Row in Assumptions_Macro)",Row Ref,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,"Row number for US CPI in assumptions_macro.csv (1-indexed, data starts row 2)"
+"FX Avg Rate Ref (Row in Assumptions_Macro)",Row Ref,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,"Row for GBP:USD Avg FX in assumptions_macro.csv"
+"FX Year End Rate Ref (Row in Assumptions_Macro)",Row Ref,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,"Row for GBP:USD Year End FX in assumptions_macro.csv"

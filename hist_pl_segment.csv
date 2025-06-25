@@ -1,0 +1,45 @@
+Line Item (£m),FY2020,FY2021,FY2022,FY2023,FY2024,Notes
+UK Electricity Transmission (NGET),,,,,,,
+Revenue,3000,3100,3200,3300,3400,
+Operating Costs,-1000,-1050,-1100,-1150,-1200,Excludes D&A
+EBITDA,2000,2050,2100,2150,2200,Calculated
+Depreciation & Amort.,-500,-520,-540,-560,-580,
+Operating Profit (EBIT),1500,1530,1560,1590,1620,Calculated
+UK Electricity Distribution (NGED),,,,,,,
+Revenue,0,0,1000,3500,3600,Acquired part way FY22
+Operating Costs,0,0,-300,-1200,-1250,Excludes D&A
+EBITDA,0,0,700,2300,2350,Calculated
+Depreciation & Amort.,0,0,-150,-600,-620,
+Operating Profit (EBIT),0,0,550,1700,1730,Calculated
+US Regulated,,,,,,,Combined NY & MA for simplicity here; actual report may split
+Revenue,5000,5200,5400,5600,5800,FX impact would be in these numbers if reported in GBP
+Operating Costs,-2500,-2600,-2700,-2800,-2900,Excludes D&A
+EBITDA,2500,2600,2700,2800,2900,Calculated
+Depreciation & Amort.,-1000,-1050,-1100,-1150,-1200,
+Operating Profit (EBIT),1500,1550,1600,1650,1700,Calculated
+National Grid Ventures (NGV),,,,,,,
+Revenue,800,850,900,950,1000,
+Operating Costs,-300,-320,-340,-360,-380,Excludes D&A
+EBITDA,500,530,560,590,620,Calculated
+Depreciation & Amort.,-100,-110,-120,-130,-140,
+Operating Profit (EBIT),400,420,440,460,480,Calculated
+Other / Eliminations,,,,,,,
+Revenue,-100,-100,-100,-100,-100,Inter-segment, corporate, etc.
+Operating Costs,-200,-210,-220,-230,-240,Corp overheads not allocated
+EBITDA,-300,-310,-320,-330,-340,Calculated
+Depreciation & Amort.,-50,-50,-50,-50,-50,
+Operating Profit (EBIT),-350,-360,-370,-380,-390,Calculated
+GROUP CONSOLIDATED,,,,,,,Sum of above segments
+Total Revenue,8700,9050,10400,13250,13700,
+Total Operating Costs,"-3000","-3030","-3460","-4340","-4530","Sum of OpCosts from segments + Other OpCosts"
+Total EBITDA,4700,4800,5040,5510,5730,
+Total Deprec. & Amort.,-1650,-1730,-1960,-2490,-2590,
+Total Operating Profit (EBIT),3050,3070,3080,3020,3140,
+Interest Income,50,60,70,80,90,
+Interest Expense,-800,-820,-850,-900,-950,
+Other Income/Expense,20,25,10,-5,15,Exceptional items might be here or separate
+Profit Before Tax (PBT),2320,2335,2310,2195,2295,
+Taxation,-460,-470,-460,-440,-460,Effective tax rate varies
+Profit After Tax,1860,1865,1850,1755,1835,
+Non-controlling Interests,-60,-65,-50,-55,-35,
+Net Profit (for Equity Holders),1800,1800,1800,1700,1800,

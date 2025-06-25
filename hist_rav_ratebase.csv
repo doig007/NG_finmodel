@@ -1,0 +1,27 @@
+Line Item,Unit,FY2020,FY2021,FY2022,FY2023,FY2024,Notes
+UK Electricity Transmission (NGET) - RAV,£m,,,,,,Values are illustrative; actuals from Annual Report segmental review or Regulatory Reporting Pack.
+Opening RAV,£m,18000,18800,19700,20800,22000,
+Capex Additions (Allowed),£m,1200,1300,1400,1500,1600,This is the portion of capex that gets added to RAV.
+Regulatory Depreciation,£m,-500,-520,-540,-560,-580,
+Inflation Adjustment,£m,100,120,240,260,280,Based on relevant inflation index (e.g., CPIH)
+Other Movements (e.g. disposals),£m,0,0,0,0,0,
+Closing RAV,£m,18800,19700,20800,22000,23300,Calculated
+UK Electricity Distribution (NGED) - RAV,£m,,,,,,Illustrative, WPD acquired in FY22. Pre-acquisition RAV not shown for NG.
+Opening RAV,£m,0,0,12000,13000,14000,Assuming acquisition brought in this RAV value.
+Capex Additions (Allowed),£m,0,0,500,1200,1300,
+Regulatory Depreciation,£m,0,0,-200,-500,-550,
+Inflation Adjustment,£m,0,0,100,300,320,
+Other Movements,£m,0,0,0,0,0,
+Closing RAV,£m,0,0,13000,14000,15070,Calculated
+US Regulated - Rate Base (NY),,,,,,,Values are illustrative; actuals from Annual Report or US regulatory filings.
+Opening Rate Base,$m,10000,10500,11000,11500,12000,e.g., USD
+Capex Additions,$m,800,850,900,950,1000,
+Book Depreciation,$m,-300,-350,-400,-450,-500,
+Other Regulatory Adjustments,$m,0,0,0,0,0,Amortization of regulatory assets/liabilities etc.
+Closing Rate Base (NY),$m,10500,11000,11500,12000,12500,Calculated
+US Regulated - Rate Base (MA),,,,,,,
+Opening Rate Base,$m,8000,8300,8600,8900,9200,
+Capex Additions,$m,500,550,600,650,700,
+Book Depreciation,$m,-200,-250,-300,-350,-400,
+Other Regulatory Adjustments,$m,0,0,0,0,0,
+Closing Rate Base (MA),$m,8300,8600,8900,9200,9500,Calculated

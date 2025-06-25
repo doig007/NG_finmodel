@@ -1,0 +1,37 @@
+Line Item (£m),FY2020,FY2021,FY2022,FY2023,FY2024,Notes
+ASSETS,,,,,,
+Non-Current Assets,,,,,,
+Property, Plant & Equipment,40000,42000,50000,53000,56000,"Includes UK RAV and US Rate Base related assets"
+Intangible Assets,8000,8500,9000,9500,10000,"Goodwill, software, licences"
+Investments (JVs, Assoc.),1000,1100,1200,1300,1400,
+Deferred Tax Assets,500,550,600,650,700,
+Other Non-Current Assets,700,750,800,850,900,"e.g., derivatives, receivables"
+Total Non-Current Assets,50200,52900,61600,65300,69000,
+Current Assets,,,,,,
+Inventories,300,320,350,380,400,
+Trade & Other Receivables,2500,2600,2800,3000,3200,
+Cash & Cash Equivalents,1000,1200,1000,1500,1300,
+Other Current Assets,200,210,220,230,240,
+Total Current Assets,4000,4330,4370,5110,5140,
+TOTAL ASSETS,54200,57230,65970,70410,74140,
+LIABILITIES & EQUITY,,,,,,
+Equity,,,,,,
+Share Capital,700,700,700,700,700,
+Share Premium / Reserves,10000,10500,11000,11500,12000,"Retained earnings, other reserves"
+Non-Controlling Interests,300,320,350,380,400,
+Total Equity,11000,11520,12050,12580,13100,
+Non-Current Liabilities,,,,,,
+Borrowings (Long-term),28000,29500,35000,37000,39000,"Bonds, loans > 1 year"
+Deferred Tax Liabilities,3000,3200,3500,3700,3900,
+Provisions,1000,1050,1100,1150,1200,"Decommissioning, pensions etc."
+Other Non-Current Liab.,800,850,900,950,1000,"e.g., derivatives"
+Total Non-Current Liab.,32800,34600,40500,42800,45100,
+Current Liabilities,,,,,,
+Borrowings (Short-term),2000,2500,3000,3500,4000,"Loans < 1 year, current portion of LT debt"
+Trade & Other Payables,3000,3100,3200,3300,3400,
+Current Tax Liabilities,500,550,600,650,700,
+Other Current Liabilities,4900,5460,7620,8580,8840,"This was a plug in example, ensure BS balances"
+Total Current Liabilities,10400,11610,14420,16030,16940,
+Total Liabilities,43200,46210,54920,58830,62040,
+TOTAL LIABILITIES & EQUITY,54200,57730,66970,71410,75140,"Should balance to Total Assets. Small diff due to rounding in example"
+Balance Check,0,-500,-1000,-1000,-1000,"Assets - (Liabilities + Equity)"
