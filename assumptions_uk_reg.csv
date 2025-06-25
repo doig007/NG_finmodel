@@ -1,0 +1,17 @@
+Assumption,Unit,FY2025,FY2026,FY2027,FY2028,FY2029,FY2030,FY2031,FY2032,FY2033,FY2034,FY2035,FY2036,FY2037,FY2038,FY2039,FY2040,Notes
+"NGET (RIIO-T2/T3)",,,,,,,,,,,,,,,,,,,
+"RAV: Capex Additions (£m)",£m,1700,1800,1900,2000,2100,2200,2200,2200,2200,2200,2200,2200,2200,2200,2200,2200,"Net of contribs. From investment plans."
+"RAV: Regulatory Depn Rate (% Opening RAV)",%,0.025,0.025,0.025,0.025,0.025,0.025,0.025,0.025,0.025,0.025,0.025,0.025,0.025,0.025,0.025,0.025,"Or abs £m. From Ofgem/company."
+"RAV: Inflation Link (CPIH Ref:Row in Assumptions_Macro)",Row Ref,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,"Row number for UK CPIH in assumptions_macro.csv (1-indexed, A=1)"
+"Revenue: Allowed WACC (Nominal %)",%,0.05,0.05,0.05,0.048,0.048,0.048,0.048,0.048,0.048,0.048,0.048,0.048,0.048,0.048,0.048,0.048,"Illustrative. From Ofgem RIIO-T2/3."
+"Revenue: Outperformance/Underperformance (£m)",£m,50,50,25,25,0,0,0,0,0,0,0,0,0,0,0,0,"Net incentive earnings"
+"Opex: Base before efficiency (£m)",£m,1250,1270,1290,1310,1330,1350,1350,1350,1350,1350,1350,1350,1350,1350,1350,1350,"Grows with inflation & activity"
+"Opex: Efficiency Target (% reduction on base)",%,0.01,0.01,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,"Annual efficiency"
+"NGED (RIIO-ED2/ED3)",,,,,,,,,,,,,,,,,,,
+"RAV: Capex Additions (£m)",£m,1400,1500,1600,1700,1800,1900,1900,1900,1900,1900,1900,1900,1900,1900,1900,1900,"From investment plans."
+"RAV: Regulatory Depn Rate (% Opening RAV)",%,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,"From Ofgem/company."
+"RAV: Inflation Link (CPIH Ref:Row in Assumptions_Macro)",Row Ref,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,"Row number for UK CPIH in assumptions_macro.csv"
+"Revenue: Allowed WACC (Nominal %)",%,0.048,0.048,0.048,0.046,0.046,0.046,0.046,0.046,0.046,0.046,0.046,0.046,0.046,0.046,0.046,0.046,"Illustrative. From Ofgem RIIO-ED2/3."
+"Revenue: Outperformance/Underperformance (£m)",£m,40,40,20,20,0,0,0,0,0,0,0,0,0,0,0,0,"Net incentive earnings"
+"Opex: Base before efficiency (£m)",£m,1300,1320,1340,1360,1380,1400,1400,1400,1400,1400,1400,1400,1400,1400,1400,1400,"Grows with inflation & activity"
+"Opex: Efficiency Target (% reduction on base)",%,0.01,0.01,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,"Annual efficiency"

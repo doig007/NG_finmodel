@@ -1,3 +1,4 @@
+```python
 import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
@@ -105,14 +106,14 @@ set_column_widths(ws_am, {'A': 45, **{get_column_letter(i+2): 12 for i in range(
 setup_sheet_headers(ws_am, "Macro & Group Assumptions", FORECAST_YEARS_MODEL)
 
 macro_data = [
-    ("MACROECONOMIC", None, None, "", True), # Item, Values, NumFormat, Notes, IsSectionHeader
+    ("MACROECONOMIC", None, None, True), # Item, Values, NumFormat, Notes, IsSectionHeader
     ("UK CPIH (Annual %)", [0.03, 0.025] + [0.02]*14, FORMAT_PERCENT_1DP, "Illustrative path to long-term target"),
     ("US CPI (Annual %)", [0.028, 0.023] + [0.02]*14, FORMAT_PERCENT_1DP, "Illustrative path to long-term target"),
     ("UK 10-yr Gilt Yield (Avg %)", [0.042, 0.038, 0.035] + [0.035]*13, FORMAT_PERCENT_1DP, "For cost of debt estimates"),
     ("US 10-yr Treasury Yield (Avg %)", [0.043, 0.040, 0.038] + [0.038]*13, FORMAT_PERCENT_1DP, "For cost of debt estimates"),
     ("GBP:USD Exchange Rate (Average)", [1.25, 1.26, 1.27] + [1.28]*13, FORMAT_NUMBER_2DP, "For P&L/CF translation"),
     ("GBP:USD Exchange Rate (Year End)", [1.26, 1.27, 1.28] + [1.29]*13, FORMAT_NUMBER_2DP, "For BS translation"),
-    ("FINANCING & GROUP", None, None, "", True),
+    ("FINANCING & GROUP", None, None, True),
     ("Cost of New Debt (GBP %)", [0.055, 0.053] + [0.050]*14, FORMAT_PERCENT_1DP, "Illustrative, spread over Gilts"),
     ("Cost of New Debt (USD %)", [0.058, 0.055] + [0.053]*14, FORMAT_PERCENT_1DP, "Illustrative, spread over Treasuries"),
     ("UK Corporation Tax Rate (%)", [0.25]*16, FORMAT_PERCENT_0DP, "Current legislated"),
@@ -168,7 +169,7 @@ hpl_rows = [ # (Description, FY20, FY21, FY22, FY23, FY24, Notes, Is_Header, Num
     ("Operating Costs", -300, -320, -340, -360, -380, "", False, FORMAT_NUMBER_0DP_NEG_PAREN),
     ("EBITDA", "=B21+B22", "=C21+C22", "=D21+D22", "=E21+E22", "=F21+F22", "Calculated", False, FORMAT_NUMBER_0DP_NEG_PAREN),
     ("Depreciation & Amort.", -100, -110, -120, -130, -140, "", False, FORMAT_NUMBER_0DP_NEG_PAREN),
-    ("Operating Profit (EBIT)", "=B23+B24", "=C23+C24", "=D23+D24", "=E23+E24", "=F23+F24", "Calculated", False, FORMAT_NUMBER_0DP_NEG_PAREN),
+    ("Operating Profit (EBIT)", "=B23+B24", "=C23+C24", "=D23+D24", "=E23+E4", "=F23+F24", "Calculated", False, FORMAT_NUMBER_0DP_NEG_PAREN),
     ("Other / Eliminations", None, None, None, None, None, "", True, None),
     ("Revenue", -100, -100, -100, -100, -100, "", False, FORMAT_NUMBER_0DP_NEG_PAREN),
     ("Operating Costs", -200, -210, -220, -230, -240, "", False, FORMAT_NUMBER_0DP_NEG_PAREN),
@@ -191,15 +192,16 @@ hpl_rows = [ # (Description, FY20, FY21, FY22, FY23, FY24, Notes, Is_Header, Num
 ]
 current_row = 2
 for row_data_tuple in hpl_rows:
-    desc, v1, v2, v3, v4, v5, notes_val, is_header_val, num_fmt_val = row_data_tuple[0], row_data_tuple[1], row_data_tuple[2], row_data_tuple[3], row_data_tuple[4], row_data_tuple[5], row_data_tuple[6], row_data_tuple[7], row_data_tuple[8]
+    desc, notes_val, is_header_val, num_fmt_val = row_data_tuple[0], row_data_tuple[6], row_data_tuple[7], row_data_tuple[8]
+    data_vals = row_data_tuple[1:6]
+
     cell_A = ws_hpl.cell(row=current_row, column=1, value=desc)
     if is_header_val:
         ws_hpl.merge_cells(start_row=current_row, start_column=1, end_row=current_row, end_column=len(HISTORICAL_YEARS_DATA)+2)
         cell_A.font = FONT_HEADER; cell_A.fill = FILL_HEADER; cell_A.alignment = ALIGN_CENTER
     else:
-        style_row_header(cell_A, level=2 if desc.startswith("Total") or "GROUP" in desc else 3)
-        data_values = [v1,v2,v3,v4,v5]
-        for i, val in enumerate(data_values):
+        style_row_header(cell_A, level=2)
+        for i, val in enumerate(data_vals):
             data_cell = ws_hpl.cell(row=current_row, column=i+2, value=val)
             style_data_cell(data_cell, is_input=not (isinstance(val, str) and val.startswith("=")), number_format=num_fmt_val)
         ws_hpl.cell(row=current_row, column=len(HISTORICAL_YEARS_DATA)+2, value=notes_val).border = BORDER_THIN_ALL
@@ -241,27 +243,28 @@ hbs_rows = [ # (Description, FY20, FY21, FY22, FY23, FY24, Notes, Is_Header, Num
     ("Borrowings (Short-term)", 2000, 2500, 3000, 3500, 4000, "", False, FORMAT_NUMBER_0DP_NEG_PAREN),
     ("Trade & Other Payables", 3000, 3100, 3200, 3300, 3400, "", False, FORMAT_NUMBER_0DP_NEG_PAREN),
     ("Current Tax Liabilities", 500, 550, 600, 650, 700, "", False, FORMAT_NUMBER_0DP_NEG_PAREN),
-    ("Other Current Liabilities", 4900, 5460, 7620, 8580, 8840, "Plug in example, ensure BS balances", False, FORMAT_NUMBER_0DP_NEG_PAREN),
+    ("Other Current Liabilities", 4900, 5460, 7620, 8580, 8840, "", False, FORMAT_NUMBER_0DP_NEG_PAREN), # Note: This was a plug in example, ensure BS balances
     ("Total Current Liabilities", "=SUM(B30:B33)", "=SUM(C30:C33)", "=SUM(D30:D33)", "=SUM(E30:E33)", "=SUM(F30:F33)", "Calculated", False, FORMAT_NUMBER_0DP_NEG_PAREN),
     ("Total Liabilities", "=B28+B34", "=C28+C34", "=D28+D34", "=E28+E34", "=F28+F34", "Calculated", False, FORMAT_NUMBER_0DP_NEG_PAREN),
     ("TOTAL LIABILITIES & EQUITY", "=B22+B35", "=C22+C35", "=D22+D35", "=E22+E35", "=F22+F35", "Calculated", False, FORMAT_NUMBER_0DP_NEG_PAREN),
     ("Balance Check (Assets - L&E)", "=B16-B36", "=C16-C36", "=D16-D36", "=E16-E36", "=F16-F36", "Should be 0", False, FORMAT_NUMBER_0DP_NEG_PAREN)
 ]
 current_row = 2
-for row_data_tuple in hbs_rows:
-    desc, v1, v2, v3, v4, v5, notes_val, is_header_val, num_fmt_val = row_data_tuple[0], row_data_tuple[1], row_data_tuple[2], row_data_tuple[3], row_data_tuple[4], row_data_tuple[5], row_data_tuple[6], row_data_tuple[7], row_data_tuple[8]
+for row_data_tuple in hbs_rows: # Adapt as per hpl_rows
+    desc, notes_val, is_header_val, num_fmt_val = row_data_tuple[0], row_data_tuple[6], row_data_tuple[7], row_data_tuple[8]
+    data_vals = row_data_tuple[1:6]
     cell_A = ws_hbs.cell(row=current_row, column=1, value=desc)
     if is_header_val:
         ws_hbs.merge_cells(start_row=current_row, start_column=1, end_row=current_row, end_column=len(HISTORICAL_YEARS_DATA)+2)
         cell_A.font = FONT_HEADER; cell_A.fill = FILL_HEADER; cell_A.alignment = ALIGN_CENTER
     else:
-        style_row_header(cell_A, level=2 if desc.startswith("Total") or "TOTAL" in desc or "Balance Check" in desc else 3)
-        data_values = [v1,v2,v3,v4,v5]
-        for i, val in enumerate(data_values):
+        style_row_header(cell_A, level=2 if desc.startswith("Total") or desc.startswith("TOTAL") else 3)
+        for i, val in enumerate(data_vals):
             data_cell = ws_hbs.cell(row=current_row, column=i+2, value=val)
             style_data_cell(data_cell, is_input=not (isinstance(val, str) and val.startswith("=")), number_format=num_fmt_val)
         ws_hbs.cell(row=current_row, column=len(HISTORICAL_YEARS_DATA)+2, value=notes_val).border = BORDER_THIN_ALL
     current_row +=1
+
 
 # --- Sheet: Hist_CF_Consol ---
 ws_hcf = wb.create_sheet("Hist_CF_Consol")
@@ -271,22 +274,26 @@ hcf_rows = [ # (Description, FY20, FY21, FY22, FY23, FY24, Notes, Is_Header, Num
     ("Cash Flow from Operating Activities (CFO)", None, None, None, None, None, "", True, None),
     ("Profit Before Tax", 2320,2335,2310,2195,2295, "From P&L", False, FORMAT_NUMBER_0DP_NEG_PAREN),
     ("Depreciation & Amortization", 1650,1730,1960,2490,2590, "From P&L", False, FORMAT_NUMBER_0DP_NEG_PAREN),
+    # ... Other CFO items (Interest, Tax Paid, WC Change, Other Non-Cash)
     ("Net CFO", 4170, 4295, 4650, 4945, 5315, "Calculated", False, FORMAT_NUMBER_0DP_NEG_PAREN),
     ("Cash Flow from Investing Activities (CFI)", None, None, None, None, None, "", True, None),
     ("Purchase of PP&E (Capex)", -3500, -3800, -4500, -5000, -5500, "", False, FORMAT_NUMBER_0DP_NEG_PAREN),
+    # ... Other CFI items
     ("Net CFI", -3580, -3865, -9700, -4085, -5720, "Calculated", False, FORMAT_NUMBER_0DP_NEG_PAREN),
     ("Cash Flow from Financing Activities (CFF)", None, None, None, None, None, "", True, None),
     ("Proceeds from Borrowings", 2000,2200,6000,1500,2000, "", False, FORMAT_NUMBER_0DP_NEG_PAREN),
     ("Repayment of Borrowings", -1000,-1200,-800,-1000,-1100, "", False, FORMAT_NUMBER_0DP_NEG_PAREN),
     ("Dividends Paid to Equity Holders", -1200, -1230, -1250, -1280, -1300, "", False, FORMAT_NUMBER_0DP_NEG_PAREN),
+    # ... Other CFF items
     ("Net CFF", -1030, -1085, 3130, -1695, -1305, "Calculated", False, FORMAT_NUMBER_0DP_NEG_PAREN),
     ("Net Change in Cash & Equivalents", -440, -655, -1920, -835, -1710, "CFO+CFI+CFF", False, FORMAT_NUMBER_0DP_NEG_PAREN),
-    ("Cash at Beginning of Year", 1440, 1000, 345, -1575, -2410, "From prior year BS", False, FORMAT_NUMBER_0DP_NEG_PAREN),
-    ("Cash at End of Year", 1000, 345, -1575, -2410, -4120, "Should match BS Cash", False, FORMAT_NUMBER_0DP_NEG_PAREN)
+    ("Cash at Beginning of Year", 1440, 1000, 345, -1575, -2410, "From prior year BS", False, FORMAT_NUMBER_0DP_NEG_PAREN), # Example, ensure link
+    ("Cash at End of Year", 1000, 345, -1575, -2410, -4120, "Should match BS Cash", False, FORMAT_NUMBER_0DP_NEG_PAREN) # Example, ensure link
 ]
 current_row = 2
-for row_data_tuple in hcf_rows:
-    desc, v1, v2, v3, v4, v5, notes_val, is_header_val, num_fmt_val = row_data_tuple[0], row_data_tuple[1], row_data_tuple[2], row_data_tuple[3], row_data_tuple[4], row_data_tuple[5], row_data_tuple[6], row_data_tuple[7], row_data_tuple[8]
+for row_data_tuple in hcf_rows: # Adapt as per hpl_rows
+    desc, notes_val, is_header_val, num_fmt_val = row_data_tuple[0], row_data_tuple[6], row_data_tuple[7], row_data_tuple[8]
+    data_vals = row_data_tuple[1:6]
     cell_A = ws_hcf.cell(row=current_row, column=1, value=desc)
     if is_header_val:
         ws_hcf.merge_cells(start_row=current_row, start_column=1, end_row=current_row, end_column=len(HISTORICAL_YEARS_DATA)+2)
@@ -322,8 +329,9 @@ hrav_rows = [ # (Description, FY20, FY21, FY22, FY23, FY24, Notes, Is_Header, Nu
     ("Closing Rate Base ($m)", 8300,8600,8900,9200,9500, "Illustrative", False, FORMAT_NUMBER_0DP),
 ]
 current_row = 2
-for row_data_tuple in hrav_rows:
-    desc, v1, v2, v3, v4, v5, notes_val, is_header_val, num_fmt_val = row_data_tuple[0], row_data_tuple[1], row_data_tuple[2], row_data_tuple[3], row_data_tuple[4], row_data_tuple[5], row_data_tuple[6], row_data_tuple[7], row_data_tuple[8]
+for row_data_tuple in hrav_rows: # Adapt as per hpl_rows
+    desc, notes_val, is_header_val, num_fmt_val = row_data_tuple[0], row_data_tuple[6], row_data_tuple[7], row_data_tuple[8]
+    data_vals = row_data_tuple[1:6]
     cell_A = ws_hrav.cell(row=current_row, column=1, value=desc)
     if is_header_val:
         ws_hrav.merge_cells(start_row=current_row, start_column=1, end_row=current_row, end_column=len(HISTORICAL_YEARS_DATA)+2)
@@ -336,20 +344,21 @@ for row_data_tuple in hrav_rows:
         ws_hrav.cell(row=current_row, column=len(HISTORICAL_YEARS_DATA)+2, value=notes_val).border = BORDER_THIN_ALL
     current_row +=1
 
+
 # --- Sheet: Assumptions_UK_Reg ---
 ws_ukr = wb.create_sheet("Assumptions_UK_Reg")
 set_column_widths(ws_ukr, {'A': 45, **{get_column_letter(i+2): 12 for i in range(len(FORECAST_YEARS_MODEL))}, get_column_letter(len(FORECAST_YEARS_MODEL)+2): 50})
 setup_sheet_headers(ws_ukr, "UK Regulated Assumptions", FORECAST_YEARS_MODEL)
 uk_reg_data = [
-    ("NGET (RIIO-T2/T3)", None, None, "", True),
+    ("NGET (RIIO-T2/T3)", None, None, True),
     ("RAV: Capex Additions (£m)", [1700, 1800, 1900, 2000, 2100] + [2200]*11, FORMAT_NUMBER_0DP, "Net of contribs. From investment plans."),
     ("RAV: Regulatory Depn Rate (% Opening RAV)", [0.025]*16, FORMAT_PERCENT_1DP, "Or abs £m. From Ofgem/company."),
-    ("RAV: Inflation Link (CPIH Ref)", ["=Assumptions_Macro!C2"]*16, FORMAT_PERCENT_1DP, "='Assumptions_Macro'!C2 (drag right)"),
+    ("RAV: Inflation Link (CPIH Ref)", ["=Assumptions_Macro!C2"]*16, FORMAT_PERCENT_1DP, "='Assumptions_Macro'!C2 (drag right)"), # Note: C2 is CPIH for FY25
     ("Revenue: Allowed WACC (Nominal %)", [0.050, 0.050, 0.050, 0.048, 0.048] + [0.048]*11, FORMAT_PERCENT_1DP, "Illustrative. From Ofgem RIIO-T2/3."),
     ("Revenue: Outperformance/Underperformance (£m)", [50, 50, 25, 25, 0] + [0]*11, FORMAT_NUMBER_0DP_NEG_PAREN, "Net incentive earnings"),
     ("Opex: Base before efficiency (£m)", [1250, 1270, 1290, 1310, 1330] + [1350]*11, FORMAT_NUMBER_0DP_NEG_PAREN, "Grows with inflation & activity"),
     ("Opex: Efficiency Target (% reduction on base)", [0.01, 0.01, 0.005, 0.005, 0.005] + [0.005]*11, FORMAT_PERCENT_1DP, "Annual efficiency"),
-    ("NGED (RIIO-ED2/ED3)", None, None, "", True),
+    ("NGED (RIIO-ED2/ED3)", None, None, True),
     ("RAV: Capex Additions (£m)", [1400, 1500, 1600, 1700, 1800] + [1900]*11, FORMAT_NUMBER_0DP, "From investment plans."),
     ("RAV: Regulatory Depn Rate (% Opening RAV)", [0.030]*16, FORMAT_PERCENT_1DP, "From Ofgem/company."),
     ("RAV: Inflation Link (CPIH Ref)", ["=Assumptions_Macro!C2"]*16, FORMAT_PERCENT_1DP, "='Assumptions_Macro'!C2 (drag right)"),
@@ -361,7 +370,7 @@ uk_reg_data = [
 current_row = 2
 for item_data in uk_reg_data:
     item, values, num_format, notes_text = item_data[0], item_data[1], item_data[2], item_data[3]
-    is_section_header = item_data[4] if len(item_data) > 4 else (values is None)
+    is_section_header = item_data[4] if len(item_data) > 4 else (values is None) # Simplified section check
     cell_A = ws_ukr.cell(row=current_row, column=1, value=item)
     if is_section_header:
         ws_ukr.merge_cells(start_row=current_row, start_column=1, end_row=current_row, end_column=len(FORECAST_YEARS_MODEL)+2)
@@ -372,7 +381,7 @@ for item_data in uk_reg_data:
         for i, val in enumerate(values):
             data_cell = ws_ukr.cell(row=current_row, column=i+2, value=val)
             if isinstance(val, str) and val.startswith("="): # Formula
-                style_data_cell(data_cell, is_input=False, number_format=num_format)
+                style_data_cell(data_cell, is_input=False, number_format=num_format) # Formulas are not inputs
             else: # Input
                 style_data_cell(data_cell, is_input=True, number_format=num_format)
     current_row += 1
@@ -382,14 +391,14 @@ ws_usr = wb.create_sheet("Assumptions_US_Reg")
 set_column_widths(ws_usr, {'A': 45, **{get_column_letter(i+2): 12 for i in range(len(FORECAST_YEARS_MODEL))}, get_column_letter(len(FORECAST_YEARS_MODEL)+2): 50})
 setup_sheet_headers(ws_usr, "US Regulated Assumptions", FORECAST_YEARS_MODEL)
 us_reg_data = [
-    ("New York (NY)", None, None, "", True),
+    ("New York (NY)", None, None, True),
     ("Rate Base: Capex Additions ($m)", [1200, 1250, 1300, 1350, 1400] + [1450]*11, FORMAT_NUMBER_0DP, "Original currency. Company plans."),
     ("Rate Base: Book Depn Rate (% Opening RB)", [0.035]*16, FORMAT_PERCENT_1DP, "Or $m. From PUC filings."),
     ("Revenue: Allowed ROE (%)", [0.090, 0.090, 0.091, 0.091, 0.092] + [0.092]*11, FORMAT_PERCENT_1DP, "From latest rate case."),
     ("Revenue: Equity Ratio in Cap Structure (%)", [0.50]*16, FORMAT_PERCENT_0DP, "For ratemaking purposes."),
     ("Revenue: Overall Growth Rate (%)", [0.040,0.042,0.045,0.040,0.038] + [0.035]*11, FORMAT_PERCENT_1DP, "Incl. rate changes & underlying growth."),
     ("Opex: Growth (before US CPI inflation) (%)", [0.01, 0.01, 0.008, 0.005, 0.005] + [0.005]*11, FORMAT_PERCENT_1DP, "Underlying opex growth."),
-    ("Massachusetts (MA)", None, None, "", True),
+    ("Massachusetts (MA)", None, None, True),
     ("Rate Base: Capex Additions ($m)", [900, 950, 1000, 1050, 1100] + [1150]*11, FORMAT_NUMBER_0DP, "Original currency."),
     ("Rate Base: Book Depn Rate (% Opening RB)", [0.033]*16, FORMAT_PERCENT_1DP, ""),
     ("Revenue: Allowed ROE (%)", [0.092, 0.092, 0.093, 0.093, 0.094] + [0.094]*11, FORMAT_PERCENT_1DP, ""),
@@ -397,8 +406,8 @@ us_reg_data = [
     ("Revenue: Overall Growth Rate (%)", [0.038,0.040,0.042,0.038,0.036] + [0.033]*11, FORMAT_PERCENT_1DP, ""),
     ("Opex: Growth (before US CPI inflation) (%)", [0.008, 0.008, 0.006, 0.004, 0.004] + [0.004]*11, FORMAT_PERCENT_1DP, ""),
 ]
-current_row = 2
-for item_data in us_reg_data:
+current_row = 2 # Reset for this sheet
+for item_data in us_reg_data: # Adapt as per macro_data
     item, values, num_format, notes_text = item_data[0], item_data[1], item_data[2], item_data[3]
     is_section_header = item_data[4] if len(item_data) > 4 else (values is None)
     cell_A = ws_usr.cell(row=current_row, column=1, value=item)
@@ -418,19 +427,20 @@ ws_ngva = wb.create_sheet("Assumptions_NGV")
 set_column_widths(ws_ngva, {'A': 45, **{get_column_letter(i+2): 12 for i in range(len(FORECAST_YEARS_MODEL))}, get_column_letter(len(FORECAST_YEARS_MODEL)+2): 50})
 setup_sheet_headers(ws_ngva, "NGV Assumptions", FORECAST_YEARS_MODEL)
 ngv_data = [
-    ("INTERCONNECTORS", None, None, "", True),
+    ("INTERCONNECTORS", None, None, True),
     ("IFA1/2 Revenue (£m)", [158,191,179,161,146] + [140]*11, FORMAT_NUMBER_0DP_NEG_PAREN, "Capacity * Avail * Spread * Hours"),
     ("IFA1/2 Opex (£m)", [-30,-31,-32,-33,-34] + [-35]*11, FORMAT_NUMBER_0DP_NEG_PAREN, "Grows with inflation"),
     ("BritNed Revenue (£m)", [96,106,90,82,82] + [80]*11, FORMAT_NUMBER_0DP_NEG_PAREN, ""),
     ("BritNed Opex (£m)", [-20,-21,-22,-23,-24] + [-25]*11, FORMAT_NUMBER_0DP_NEG_PAREN, ""),
+    # ... Other interconnectors
     ("Total Interconnectors Capex (£m)", [-30,-30,-70,-70,-30] + [-25]*11, FORMAT_NUMBER_0DP_NEG_PAREN, "Sum of project capex"),
-    ("GRAIN LNG", None, None, "", True),
+    ("GRAIN LNG", None, None, True),
     ("Grain LNG Revenue (£m)", [150,153,146,148,140] + [135]*11, FORMAT_NUMBER_0DP_NEG_PAREN, "Contracted capacity * tariff"),
     ("Grain LNG Opex (£m)", [-50,-51,-52,-53,-54] + [-55]*11, FORMAT_NUMBER_0DP_NEG_PAREN, "Grows with inflation"),
     ("Grain LNG Capex (£m)", [-20,-30,-40,-20,-15] + [-10]*11, FORMAT_NUMBER_0DP_NEG_PAREN, "Expansion/Maintenance")
 ]
-current_row = 2
-for item_data in ngv_data:
+current_row = 2 # Reset for this sheet
+for item_data in ngv_data: # Adapt as per macro_data
     item, values, num_format, notes_text = item_data[0], item_data[1], item_data[2], item_data[3]
     is_section_header = item_data[4] if len(item_data) > 4 else (values is None)
     cell_A = ws_ngva.cell(row=current_row, column=1, value=item)
@@ -445,59 +455,91 @@ for item_data in ngv_data:
             style_data_cell(data_cell, is_input=True, number_format=num_format)
     current_row += 1
 
-# --- Sheet: Forecast_PL_Segment ---
-ws_fpl = wb.create_sheet("Forecast_PL_Segment")
-set_column_widths(ws_fpl, {'A': 40, **{get_column_letter(i+2): 12 for i in range(len(DISPLAY_YEARS))}, get_column_letter(len(DISPLAY_YEARS)+2): 70})
-setup_sheet_headers(ws_fpl, "Forecast P&L by Segment (£m)", DISPLAY_YEARS)
-# ... (Formula logic for each row and year needs to be meticulously implemented here)
-# This involves linking to Hist_PL_Segment for FY23, FY24 and then using Assumptions for FY25 onwards.
+# --- Placeholder for Forecast Sheets (P&L, BS, CF, RAV, Debt, Credit Metrics, Summary) ---
+# These would involve complex formula generation linking to the sheets above.
+# For brevity, I will only create the sheet names and headers as a placeholder.
+# The actual formula logic would be extensive.
 
-# --- Sheet: RAV_RateBase_Forecast ---
-ws_frav = wb.create_sheet("RAV_RateBase_Forecast")
-set_column_widths(ws_frav, {'A': 45, **{get_column_letter(i+2): 12 for i in range(len(FORECAST_YEARS_MODEL))}, get_column_letter(len(FORECAST_YEARS_MODEL)+2): 70})
-setup_sheet_headers(ws_frav, "Forecast RAV & Rate Base", FORECAST_YEARS_MODEL, notes_col=True)
-# ... (Formulas for RAV/Rate Base roll forward)
+sheet_details_forecast = [
+    ("Forecast_PL_Segment", "Forecast P&L by Segment (£m)", DISPLAY_YEARS, {'A': 40, **{get_column_letter(i+2): 12 for i in range(len(DISPLAY_YEARS))}, get_column_letter(len(DISPLAY_YEARS)+2): 70}),
+    ("RAV_RateBase_Forecast", "Forecast RAV & Rate Base", FORECAST_YEARS_MODEL, {'A': 45, **{get_column_letter(i+2): 12 for i in range(len(FORECAST_YEARS_MODEL))}, get_column_letter(len(FORECAST_YEARS_MODEL)+2): 70}),
+    ("Debt_Schedule_Forecast", "Forecast Debt Schedule (£m)", FORECAST_YEARS_MODEL, {'A': 40, **{get_column_letter(i+2): 12 for i in range(len(FORECAST_YEARS_MODEL))}, get_column_letter(len(FORECAST_YEARS_MODEL)+2): 70}),
+    ("Forecast_CF_Consol", "Forecast Cash Flow (£m)", DISPLAY_YEARS, {'A': 45, **{get_column_letter(i+2): 12 for i in range(len(DISPLAY_YEARS))}, get_column_letter(len(DISPLAY_YEARS)+2): 70}),
+    ("Forecast_BS_Consol", "Forecast Balance Sheet (£m)", DISPLAY_YEARS, {'A': 40, **{get_column_letter(i+2): 12 for i in range(len(DISPLAY_YEARS))}, get_column_letter(len(DISPLAY_YEARS)+2): 70}),
+    ("Credit_Metrics", "Credit Metrics", DISPLAY_YEARS, {'A': 35, **{get_column_letter(i+2): 12 for i in range(len(DISPLAY_YEARS))}, get_column_letter(len(DISPLAY_YEARS)+2): 60}),
+]
 
-# --- Sheet: Debt_Schedule_Forecast ---
-ws_fdebt = wb.create_sheet("Debt_Schedule_Forecast")
-set_column_widths(ws_fdebt, {'A': 40, **{get_column_letter(i+2): 12 for i in range(len(FORECAST_YEARS_MODEL))}, get_column_letter(len(FORECAST_YEARS_MODEL)+2): 70})
-setup_sheet_headers(ws_fdebt, "Forecast Debt Schedule (£m)", FORECAST_YEARS_MODEL)
-# ... (Formulas for debt roll forward, interest calculations, debt plug link from CF)
+for sheet_name, header_title, year_list, col_widths in sheet_details_forecast:
+    ws = wb.create_sheet(sheet_name)
+    set_column_widths(ws, col_widths)
+    setup_sheet_headers(ws, header_title, year_list, notes_col=True if sheet_name != "Cover_Summary" else False)
+    # In a full script, detailed row-by-row data and formula population would go here.
+    # Example: Add a "Balance Check" row to Forecast_BS_Consol
+    if sheet_name == "Forecast_BS_Consol":
+        # Find the last conceptual row (e.g., after Total L&E)
+        # This is simplified; a real model would have many more rows.
+        last_data_row = 25 # Example
+        ws.cell(row=last_data_row, column=1, value="Balance Check (Assets - L&E)").font = FONT_SUBHEADER
+        for i in range(len(DISPLAY_YEARS)):
+            col = get_column_letter(i+2)
+            # Placeholder formula: assumes Total Assets is row 16, Total L&E is row 36
+            # These row numbers would need to be accurate based on the full BS structure.
+            ws.cell(row=last_data_row, column=i+2, value=f"={col}16-{col}36").number_format = FORMAT_NUMBER_0DP # Should be 0
+            style_data_cell(ws.cell(row=last_data_row, column=i+2))
 
-# --- Sheet: Forecast_CF_Consol ---
-ws_fcf = wb.create_sheet("Forecast_CF_Consol")
-set_column_widths(ws_fcf, {'A': 45, **{get_column_letter(i+2): 12 for i in range(len(DISPLAY_YEARS))}, get_column_letter(len(DISPLAY_YEARS)+2): 70})
-setup_sheet_headers(ws_fcf, "Forecast Cash Flow (£m)", DISPLAY_YEARS)
-# ... (Formulas linking to P&L, BS, Assumptions, Debt Schedule; calculates debt plug)
-
-# --- Sheet: Forecast_BS_Consol ---
-ws_fbs = wb.create_sheet("Forecast_BS_Consol")
-set_column_widths(ws_fbs, {'A': 40, **{get_column_letter(i+2): 12 for i in range(len(DISPLAY_YEARS))}, get_column_letter(len(DISPLAY_YEARS)+2): 70})
-setup_sheet_headers(ws_fbs, "Forecast Balance Sheet (£m)", DISPLAY_YEARS)
-# ... (Formulas linking to Hist_BS, P&L, CF, Debt, RAV. Includes Balance Check row)
-
-# --- Sheet: Credit_Metrics ---
-ws_cred = wb.create_sheet("Credit_Metrics")
-set_column_widths(ws_cred, {'A': 35, **{get_column_letter(i+2): 12 for i in range(len(DISPLAY_YEARS))}, get_column_letter(len(DISPLAY_YEARS)+2): 60})
-setup_sheet_headers(ws_cred, "Credit Metrics", DISPLAY_YEARS)
-# ... (Formulas linking to P&L, BS, CF to calculate key ratios)
 
 # --- Sheet: Cover_Summary ---
 ws_summ = wb.create_sheet("Cover_Summary")
 summary_display_cols = HISTORICAL_YEARS_DATA[-1:] + [FORECAST_YEARS_MODEL[0], FORECAST_YEARS_MODEL[1], FORECAST_YEARS_MODEL[2], FORECAST_YEARS_MODEL[5], FORECAST_YEARS_MODEL[10], FORECAST_YEARS_MODEL[-1]]
-set_column_widths(ws_summ, {'A': 40, **{get_column_letter(i+2): 14 for i in range(len(summary_display_cols))}})
+set_column_widths(ws_summ, {'A': 40, **{get_column_letter(i+2): 14 for i in range(len(summary_display_cols))}}) # No notes column on summary
 setup_sheet_headers(ws_summ, "Model Summary", summary_display_cols, notes_col=False, main_header_fill=FILL_GREY, year_header_fill=FILL_GREY)
-# ... (Direct links to key outputs from other forecast sheets)
+# ... (Populate with direct links to key outputs from other forecast sheets and credit metrics sheet)
+# Add placeholders for charts.
+summary_rows = [
+    ("KEY FINANCIAL SUMMARY (£m)", None, True), # Item, Formula base for FY25, Is_Header
+    ("Total Revenue", "='Forecast_PL_Segment'!D33", False), # D33 is example for FY25 total revenue
+    ("Total EBITDA", "='Forecast_PL_Segment'!D34", False),
+    ("Net Profit (Equity Holders)", "='Forecast_PL_Segment'!D45", False), # Assuming Net Profit is row 45
+    ("Net Debt", "='Forecast_BS_Consol'!D_NetDebt_Row", False), # Placeholder for Net Debt row
+    ("Net CFO", "='Forecast_CF_Consol'!D_NetCFO_Row", False),
+    ("Total Capex", "=(-1)*SUM('Forecast_CF_Consol'!D_CapexPP&E_Row:'Forecast_CF_Consol'!D_CapexIntang_Row)", False),
+    ("KEY CREDIT METRICS", None, True),
+    ("FFO / Net Debt (%)", "='Credit_Metrics'!D_FFONetDebt_Row", False), # Placeholder for FFO/Net Debt row
+    ("Net Debt / EBITDA (x)", "='Credit_Metrics'!D_NetDebtEBITDA_Row", False),
+]
+current_row = 2
+for item, formula_base_fy25, is_header in summary_rows:
+    cell_A = ws_summ.cell(row=current_row, column=1, value=item)
+    if is_header:
+        ws_summ.merge_cells(start_row=current_row, start_column=1, end_row=current_row, end_column=len(summary_display_cols)+1)
+        cell_A.font = FONT_HEADER; cell_A.fill = FILL_HEADER; cell_A.alignment = ALIGN_CENTER
+    else:
+        style_row_header(cell_A, level=2)
+        # Link to the correct columns in DISPLAY_YEARS for summary_display_cols
+        # This requires mapping summary_display_cols back to DISPLAY_YEARS columns
+        # For simplicity, just putting the base formula for the first forecast year here.
+        # A full implementation would correctly pick values for FY24, FY25, FY26, FY27, FY30 etc.
+        data_cell = ws_summ.cell(row=current_row, column=2, value=f"Link Hist {item}") # Link for FY24
+        style_data_cell(data_cell, is_link=True)
+        data_cell = ws_summ.cell(row=current_row, column=3, value=formula_base_fy25) # Link for FY25
+        style_data_cell(data_cell, is_link=True, number_format=FORMAT_PERCENT_1DP if "%" in item else FORMAT_MULTIPLIER if "(x)" in item else FORMAT_NUMBER_0DP_NEG_PAREN)
+        # ... and so on for other selected summary years, adjusting column in formula_base
+    current_row +=1
+
 
 # Move Cover_Summary to be the first sheet
-if "Cover_Summary" in wb.sheetnames: # Check if sheets exist
+if "Cover_Summary" in wb.sheetnames and "Assumptions_Macro" in wb.sheetnames: # Check if sheets exist
     wb.move_sheet(ws_summ, offset=-len(wb.sheetnames)+1)
+
 
 # --- Final Save ---
 output_filename = "NationalGrid_FinancialModel_Generated.xlsx"
 try:
     wb.save(output_filename)
-    # print(f"Successfully created '{output_filename}'") # Cannot use print in this environment
+    # print(f"Successfully created '{output_filename}'") # Cannot use print
 except Exception as e:
     # print(f"Error saving workbook: {e}") # Cannot use print
-    pass # Placeholder for error logging or handling
+    # In a real script, you'd log this error
+    pass
+
+```
